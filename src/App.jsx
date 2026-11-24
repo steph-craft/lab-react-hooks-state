@@ -1,38 +1,48 @@
-import React, { useState } from 'react'
-import ProductList from './components/ProductList'
-import DarkModeToggle from './components/DarkModeToggle'
-import Cart from './components/Cart'
 
-const App = () => {
-  // TODO: Implement state for dark mode toggle
+import React, { useState } from "react";
+import "./App.css";
 
-  // TODO: Implement state for cart management
+import ProductList from "./components/ProductList";
+import DarkModeToggle from "./components/DarkModeToggle";
+import Cart from "./components/Cart";
 
-  // TODO: Implement state for category filtering
+function App() {
+  // Dark mode state
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Shopping cart state
+  const [cartItems, setCartItems] = useState([]);
+
+  // Category filter state
+  const [category, setCategory] = useState("all");
+
+  // Add product to cart
+  const addToCart = (product) => {
+    setCartItems((currentItems) => [...currentItems, product]);
+  };
 
   return (
-    <div>
-      <h1>🛒 Shopping App</h1>
-      <p>
-        Welcome! Your task is to implement filtering, cart management, and dark
-        mode.
-      </p>
+    <div className={darkMode ? "app dark-mode" : "app light-mode"}>
+      <header>
+        <h1>My Shopping App</h1>
 
-      {/* TODO: Render DarkModeToggle and implement dark mode functionality */}
+        <DarkModeToggle
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
+      </header>
 
-      {/* TODO: Implement category filter dropdown */}
-      <label>Filter by Category: </label>
-      <select>
-        <option value="all">All</option>
-        <option value="Fruits">Fruits</option>
-        <option value="Dairy">Dairy</option>
-      </select>
+      <main>
+        <ProductList
+          category={category}
+          setCategory={setCategory}
+          addToCart={addToCart}
+        />
 
-      <ProductList />
-
-      {/* TODO: Implement and render Cart component */}
+        <Cart cartItems={cartItems} />
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
